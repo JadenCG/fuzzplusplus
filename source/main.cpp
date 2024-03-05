@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp serves as the starting point for fuzzplusplus
+ * @brief
+ * @details
+ */
 #include <iostream>
 
 int main() {
