@@ -7,6 +7,7 @@
 #define FUZZPP_INPUT_H
 #include <string>
 #include <set>
+#include <time.h>
 
 
 class GuidedInput {
