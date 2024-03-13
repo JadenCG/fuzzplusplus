@@ -13,11 +13,13 @@ public:
     unsigned int getExceptions();
     void resetData();
     void restartProgram(int argc, char* argv); //TODO: address?
+    void incCrashes();
+    void incExceptions();
 
 
 private:
-    unsigned int crashes = 0;
-    unsigned int exceptions = 0;
+    unsigned int _crashes = 0;
+    unsigned int _exceptions = 0;
 
 
 };

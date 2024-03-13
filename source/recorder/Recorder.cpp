@@ -6,15 +6,22 @@
 #include "Recorder.h"
 
 unsigned int Recorder::getCrashes() {
-    return crashes;
+    return _crashes;
 }
 
 unsigned int Recorder::getExceptions() {
-    return exceptions;
+    return _exceptions;
 }
 
 void Recorder::resetData() {
-    crashes = 0;
-    exceptions = 0;
+    _crashes = 0;
+    _exceptions = 0;
 }
 
+void Recorder::incCrashes() {
+    _crashes++;
+}
+
+void Recorder::incExceptions() {
+    _exceptions++;
+}
