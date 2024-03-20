@@ -13,7 +13,7 @@
 class Executor {
 public:
     Executor() = default;
-    ~Executor();
+    ~Executor() = default;
 
     /**
      * setPath() sets the path of the file for the executor to run

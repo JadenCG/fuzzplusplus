@@ -12,9 +12,9 @@
 
 class GuidedInput {
 public:
-    GuidedInput();
+    GuidedInput() = default;
     GuidedInput(bool setRecordValues);
-    ~GuidedInput();
+    ~GuidedInput() = default;
     //No copy constructor
 
     std::string randInt();

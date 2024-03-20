@@ -5,9 +5,10 @@
  */
 #include <iostream>
 #include <string>
-#include "/input/GuidedInput.h"
-#include "/recorder/Recorder.h"
+#include "input/GuidedInput.h"
+#include "recorder/Recorder.h"
 #include "execution/Executor.h"
+#include <Windows.h>
 
 Recorder data = Recorder();
 GuidedInput randomData = GuidedInput();
@@ -21,7 +22,10 @@ int main() {
     std::cout << "Please input the path to the program to fuzz" << std::endl;
 
     while(true) { //allow the user multiple attempts to specify a path
-        std::cin >> filePath;
+        std::cin >> filePath; //TODO: limit arg to one string and check if it is whitespace
+        if(filePath == "dev") { //shorthand for testing purposes
+            filePath = "./simpleinput.exe";
+        }
         if(!execution.setPath(filePath)) {
             std::cout << "The provided file path is incorrect or missing" << std::endl;
         }
@@ -31,23 +35,32 @@ int main() {
     }
 
     std::cout << "Please input the number of times to apply random values. This value may not be less than zero." << std::endl;
-    std::cin >> fuzzingIters;
+    std::cin >> fuzzingIters; //TODO: -1 is unsigned int max
 
     unsigned int currentIter = 0;
+    STARTUPINFOA startupInfo;
+    PROCESS_INFORMATION processInfo;
+    std::string tempArguments = "1 2";
+
+    const char * path = filePath.c_str();
+    char * currentArgument = const_cast<char *>(tempArguments.c_str()); //May fail
+
     while (currentIter < fuzzingIters) {
         //TODO: refactor using executor object
+        CreateProcessA(path, currentArgument, NULL, NULL, false, CREATE_NEW_CONSOLE, NULL, NULL, &startupInfo, &processInfo);
         try {
             int exitCode = -1;
-            if(exitCode != 0) {
+            if (exitCode != 0) {
                 data.incCrashes();
             }
         }
-        catch(const std::exception ex) {
+        catch (const std::exception ex) {
             data.incExceptions();
         }
+        currentIter++;
     }
 
 
-    
+
     return 0;
 }
