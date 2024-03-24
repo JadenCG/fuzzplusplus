@@ -16,7 +16,7 @@ Executor execution = Executor();
 
 int main() {
     std::string filePath;
-    unsigned int fuzzingIters;
+    long fuzzingIters;
 
     std::cout << "Welcome to Fuzz Plus Plus!" << std::endl;
     std::cout << "Please input the path to the program to fuzz" << std::endl;
@@ -34,13 +34,21 @@ int main() {
         }
     }
 
-    std::cout << "Please input the number of times to apply random values. This value may not be less than zero." << std::endl;
-    std::cin >> fuzzingIters; //TODO: -1 is unsigned int max
+    while(true) { //allow the user to specify the number of iterations
+        std::cout << "Please input the number of times to apply random values. This value may not be less than zero" << std::endl;
+        std::cin >> fuzzingIters;
+        if(fuzzingIters < 0) {
+            std::cout << "The provided value is less than zero or invalid, please try again" << std::endl;
+        }
+        else {
+            break;
+        }
+    }
 
     unsigned int currentIter = 0;
     STARTUPINFOA startupInfo;
     PROCESS_INFORMATION processInfo;
-    std::string tempArguments = "1 2";
+    std::string tempArguments = "2 2";
 
     const char * path = filePath.c_str();
     char * currentArgument = const_cast<char *>(tempArguments.c_str()); //May fail
@@ -60,7 +68,7 @@ int main() {
         currentIter++;
     }
 
-
+    std::cout << processInfo << std::endl;
 
     return 0;
 }
