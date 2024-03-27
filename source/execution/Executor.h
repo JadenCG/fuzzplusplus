@@ -9,6 +9,7 @@
 #include <string>
 #include <stdexcept>
 #include <filesystem>
+#include <Windows.h>
 
 class Executor {
 public:
@@ -34,11 +35,13 @@ public:
      * @param executionResult - A pointer to an integer value. This will be used for the result of execution
      * @return - true if the program has run, false if the program has not been set or is improperly set
      */
-    bool runProgram(int* executionResult);
+    bool runProgram(DWORD* executionResult, std::string arguments); //TODO: re-document
 
 private:
     std::string _filePath = "";
     bool _pathIsSet = false;
+    STARTUPINFOA _startupInfo;
+    PROCESS_INFORMATION _processInfo;
 };
 
 

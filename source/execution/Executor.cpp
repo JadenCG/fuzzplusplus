@@ -22,10 +22,16 @@ bool Executor::isValidPath(std::string path) {
     return false;
 }
 
-bool Executor::runProgram(int *executionResult) {
+bool Executor::runProgram(DWORD* executionResult, std::string arguments) {
     if(!_pathIsSet) {
         return false; //Don't execute if the path has not been updated properly
     }
-    //TODO: running the program
+    const char* path = _filePath.c_str();
+    char* args = const_cast<char *>(arguments.c_str());
+
+    CreateProcessA(path, args, NULL, NULL, false, CREATE_NEW_CONSOLE, NULL, NULL, &_startupInfo, &_processInfo);
+    WaitForSingleObject( _processInfo.hProcess, INFINITE );
+
+    GetExitCodeProcess(_processInfo.hProcess, executionResult);
     return true;
 }

@@ -8,7 +8,6 @@
 #include "input/GuidedInput.h"
 #include "recorder/Recorder.h"
 #include "execution/Executor.h"
-#include <Windows.h>
 
 Recorder data = Recorder();
 GuidedInput randomData = GuidedInput();
@@ -25,6 +24,7 @@ int main() {
         std::cin >> filePath; //TODO: limit arg to one string and check if it is whitespace
         if(filePath == "dev") { //shorthand for testing purposes
             filePath = "./simpleinput.exe";
+            execution.setPath("./simpleinput.exe");
         }
         if(!execution.setPath(filePath)) {
             std::cout << "The provided file path is incorrect or missing" << std::endl;
@@ -46,19 +46,13 @@ int main() {
     }
 
     unsigned int currentIter = 0;
-    STARTUPINFOA startupInfo;
-    PROCESS_INFORMATION processInfo;
-    std::string tempArguments = "2 2";
-
-    const char * path = filePath.c_str();
-    char * currentArgument = const_cast<char *>(tempArguments.c_str()); //May fail
+    DWORD exitCode;
+    std::string tempArguments = "1 2";
 
     while (currentIter < fuzzingIters) {
-        //TODO: refactor using executor object
-        CreateProcessA(path, currentArgument, NULL, NULL, false, CREATE_NEW_CONSOLE, NULL, NULL, &startupInfo, &processInfo);
         try {
-            int exitCode = -1;
-            if (exitCode != 0) {
+            execution.runProgram(&exitCode, tempArguments);
+            if (exitCode != 0) { //TODO: likely bugged
                 data.incCrashes();
             }
         }
@@ -66,9 +60,8 @@ int main() {
             data.incExceptions();
         }
         currentIter++;
+        std::cout << exitCode << std::endl;
     }
-
-    std::cout << processInfo << std::endl;
 
     return 0;
 }
