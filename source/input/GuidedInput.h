@@ -17,8 +17,10 @@ public:
     ~GuidedInput() = default;
     //No copy constructor
 
-    std::string randInt();
-    std::string randInt(int lowerBound, int upperBound);
+    int randInt();
+    int randInt(int lowerBound, int upperBound);
+    std::string makePair(int size);
+    std::string makeBoundedPair(int size, int lowerBound, int upperBound);
 
 private:
     bool recordValues = false;

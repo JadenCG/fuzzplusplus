@@ -16,6 +16,11 @@ Executor execution = Executor();
 int main() {
     std::string filePath;
     long fuzzingIters;
+    std::string lowerBoundAsString;
+    int numVals;
+    int lowerBound;
+    int upperBound;
+    bool useBounded = false;
 
     std::cout << "Welcome to Fuzz Plus Plus!" << std::endl;
     std::cout << "Please input the path to the program to fuzz" << std::endl;
@@ -45,14 +50,46 @@ int main() {
         }
     }
 
+    while(true) {
+        std::cout << "Please enter the number of arguments the program should use." << std::endl;
+        std::cin >> numVals;
+        if(numVals >= 0) {
+            break;
+        }
+    }
+
+    while(true) {
+        std::cout << "Please input the lower bound to fuzz by. If you do not want to set bounds, enter \"N/A\"" << std::endl;
+        std::cin >> lowerBoundAsString;
+        if(lowerBoundAsString == "N/A") {
+            break; //cancel if lower bound is NA
+        }
+        useBounded = true;
+        lowerBound = std::stoi(lowerBoundAsString);
+
+        std::cout << "Please input the upper bound to fuzz by." << std::endl;
+        std::cin >> upperBound;
+        if(lowerBound < upperBound) {
+            break; //One final check: are the bounds within an acceptable range?
+        }
+    }
+
     unsigned int currentIter = 0;
     DWORD exitCode;
     std::string tempArguments = "1 2";
 
     while (currentIter < fuzzingIters) {
+        if(numVals > 1) {
+            if(useBounded) {
+                randomData.makeBoundedPair(numVals, lowerBound, upperBound);
+            }
+            else {
+                randomData.makePair(numVals);
+            }
+        }
         try {
             execution.runProgram(&exitCode, tempArguments);
-            if (exitCode != 0) { //TODO: likely bugged
+            if (exitCode != 0) {
                 data.incCrashes();
             }
         }

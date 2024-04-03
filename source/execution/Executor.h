@@ -31,11 +31,12 @@ public:
     bool isValidPath(std::string path);
 
     /**
-     * runProgram() executes the program set through the setPath() method
-     * @param executionResult - A pointer to an integer value. This will be used for the result of execution
-     * @return - true if the program has run, false if the program has not been set or is improperly set
+     * runProgram() executes the program which the Executor has been initialized with
+     * @param executionResult - A DWORD object pointer; used as a secondary return value
+     * @param arguments - The arguments to run the program with
+     * @return - TRUE if the method completed without issues, otherwise FALSE is returned
      */
-    bool runProgram(DWORD* executionResult, std::string arguments); //TODO: re-document
+    bool runProgram(DWORD* executionResult, std::string arguments);
 
 private:
     std::string _filePath = "";
