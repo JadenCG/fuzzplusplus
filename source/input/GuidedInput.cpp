@@ -17,14 +17,31 @@ int GuidedInput::randInt() {
 
 int GuidedInput::randInt(int lowerBound, int upperBound) {
     srand(time(NULL));
-    int value = lowerBound + (rand() % upperBound);
+    int value;
+    if(upperBound != 0) {
+         value = lowerBound + (rand() % upperBound);
+    }
+    else {
+        value = 0;
+    }
+
     if(recordValues) {
         usedValues.insert(value);
     }
     return value;
 }
 
-std::string GuidedInput::makePair(int size) {
+float GuidedInput::randFloat() {
+    srand(time(NULL));
+    return (float) rand();
+}
+
+bool GuidedInput::randBool() {
+    srand(time(NULL));
+    return (bool) (rand() % 2);
+}
+
+std::string GuidedInput::makeIntPair(int size) {
     if(size <= 0) {
         return "";
     }
@@ -37,13 +54,13 @@ std::string GuidedInput::makePair(int size) {
         }
         else {
             currentString += std::to_string(randInt()) + " ";
-            currentIndex++;
         }
+        currentIndex++;
     }
     return currentString;
 }
 
-std::string GuidedInput::makeBoundedPair(int size, int lowerBound, int upperBound) {
+std::string GuidedInput::makeBoundedIntPair(int size, int lowerBound, int upperBound) {
     if(size <= 0) {
         return "";
     }
@@ -56,8 +73,8 @@ std::string GuidedInput::makeBoundedPair(int size, int lowerBound, int upperBoun
         }
         else {
             currentString += std::to_string(randInt(lowerBound, upperBound)) + " ";
-            currentIndex++;
         }
+        currentIndex++;
     }
     return currentString;
 }

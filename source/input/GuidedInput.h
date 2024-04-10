@@ -19,8 +19,13 @@ public:
 
     int randInt();
     int randInt(int lowerBound, int upperBound);
-    std::string makePair(int size);
-    std::string makeBoundedPair(int size, int lowerBound, int upperBound);
+    float randFloat();
+    char randChar();
+    char randChar(int lowerBound, int upperBound);
+    bool randBool();
+
+    std::string makeIntPair(int size);
+    std::string makeBoundedIntPair(int size, int lowerBound, int upperBound);
 
 private:
     bool recordValues = false;

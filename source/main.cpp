@@ -3,6 +3,8 @@
  * @brief
  * @details
  */
+
+//TODO: Console displays briefly on run
 #include <iostream>
 #include <string>
 #include "input/GuidedInput.h"
@@ -69,7 +71,7 @@ int main() {
 
         std::cout << "Please input the upper bound to fuzz by." << std::endl;
         std::cin >> upperBound;
-        if(lowerBound < upperBound) {
+        if(lowerBound >= upperBound) {
             break; //One final check: are the bounds within an acceptable range?
         }
     }
@@ -81,10 +83,10 @@ int main() {
     while (currentIter < fuzzingIters) {
         if(numVals > 1) {
             if(useBounded) {
-                randomData.makeBoundedPair(numVals, lowerBound, upperBound);
+                randomData.makeBoundedIntPair(numVals, lowerBound, upperBound);
             }
             else {
-                randomData.makePair(numVals);
+                randomData.makeIntPair(numVals);
             }
         }
         try {

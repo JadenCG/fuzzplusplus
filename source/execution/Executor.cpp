@@ -30,6 +30,7 @@ bool Executor::runProgram(DWORD* executionResult, std::string arguments) {
     char* args = const_cast<char *>(arguments.c_str());
 
     CreateProcessA(path, args, NULL, NULL, false, CREATE_NEW_CONSOLE, NULL, NULL, &_startupInfo, &_processInfo);
+    ShowWindow( GetConsoleWindow(), SW_HIDE );
     WaitForSingleObject( _processInfo.hProcess, INFINITE );
 
     GetExitCodeProcess(_processInfo.hProcess, executionResult);
