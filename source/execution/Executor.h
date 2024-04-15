@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <filesystem>
 #include <Windows.h>
+#include "../recorder/Recorder.h"
 
 class Executor {
 public:
@@ -38,11 +39,18 @@ public:
      */
     bool runProgram(DWORD* executionResult, std::string arguments);
 
+    /**
+     * printResults() outputs the results of execution. If no crashing data was recorded, a message indicating so will
+     * display
+     */
+    void printResults();
+
 private:
     std::string _filePath = "";
     bool _pathIsSet = false;
     STARTUPINFOA _startupInfo;
     PROCESS_INFORMATION _processInfo;
+    Recorder _records;
 };
 
 

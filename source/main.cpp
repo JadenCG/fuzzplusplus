@@ -71,7 +71,7 @@ int main() {
 
         std::cout << "Please input the upper bound to fuzz by." << std::endl;
         std::cin >> upperBound;
-        if(lowerBound >= upperBound) {
+        if(upperBound >= lowerBound) {
             break; //One final check: are the bounds within an acceptable range?
         }
     }
@@ -79,24 +79,22 @@ int main() {
     unsigned int currentIter = 0;
     DWORD exitCode;
     std::string tempArguments = "1 2";
+    std::string arguments;
 
     while (currentIter < fuzzingIters) {
         if(numVals > 1) {
             if(useBounded) {
-                randomData.makeBoundedIntPair(numVals, lowerBound, upperBound);
+                arguments = randomData.makeBoundedIntPair(numVals, lowerBound, upperBound);
             }
             else {
-                randomData.makeIntPair(numVals);
+                arguments = randomData.makeIntPair(numVals);
             }
         }
         try {
-            execution.runProgram(&exitCode, tempArguments);
-            if (exitCode != 0) {
-                data.incCrashes();
-            }
+            execution.runProgram(&exitCode, arguments);
         }
         catch (const std::exception ex) {
-            data.incExceptions();
+            //TODO: remove?
         }
         currentIter++;
         std::cout << exitCode << std::endl;

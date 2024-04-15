@@ -33,6 +33,7 @@ bool Executor::runProgram(DWORD* executionResult, std::string arguments) {
     ShowWindow( GetConsoleWindow(), SW_HIDE );
     WaitForSingleObject( _processInfo.hProcess, INFINITE );
 
-    GetExitCodeProcess(_processInfo.hProcess, executionResult);
+    _records.record(arguments, GetExitCodeProcess(_processInfo.hProcess, executionResult)); //log any arguments
+
     return true;
 }
