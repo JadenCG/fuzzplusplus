@@ -6,9 +6,9 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-    if(argc != 2) {
-        throw std::invalid_argument("Not enough arguments, please run as simpleinput 4 [value1] [value2] [value3] [value4]");
-    }
+    //if(argc != 2) {
+    //    throw std::invalid_argument("Not enough arguments, please run as secretcode 4 [value1] [value2] [value3] [value4]");
+    //}
 
     int first = (int) *argv[0];
     int second = (int) *argv[1];

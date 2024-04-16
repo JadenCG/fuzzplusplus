@@ -7,6 +7,7 @@
 #define FUZZPP_RECORDER_H
 #include <vector>
 #include <string>
+#include <Windows.h>
 
 
 class Recorder {
@@ -40,7 +41,7 @@ public:
      * @param arguments - A string pair of arguments which were passed to the program (e.g. "1 2")
      * @param status - The status of the program post-execution. Non-zero values indicate the program encountered a problem
      */
-    void record(std::string arguments, int status);
+    void record(std::string arguments, DWORD status);
 
     /**
      * print the results of the recorded values

@@ -45,6 +45,13 @@ public:
      */
     void printResults();
 
+    /**
+     * recordResult() logs failures if present
+     * @param exitStatus - A long exit code
+     * @param arguments - A string representing the arguments passed to the fuzzed program
+     */
+    void recordResult(DWORD exitStatus, std::string arguments);
+
 private:
     std::string _filePath = "";
     bool _pathIsSet = false;

@@ -16,6 +16,7 @@ GuidedInput randomData = GuidedInput();
 Executor execution = Executor();
 
 int main() {
+    srand (time (NULL)); //should prevent generating identical numbers each run
     std::string filePath;
     long fuzzingIters;
     std::string lowerBoundAsString;
@@ -28,10 +29,14 @@ int main() {
     std::cout << "Please input the path to the program to fuzz" << std::endl;
 
     while(true) { //allow the user multiple attempts to specify a path
-        std::cin >> filePath; //TODO: limit arg to one string and check if it is whitespace
+        std::cin >> filePath;
         if(filePath == "dev") { //shorthand for testing purposes
             filePath = "./simpleinput.exe";
             execution.setPath("./simpleinput.exe");
+        }
+        if(filePath == "dev2") {
+            filePath = "./secretcode.exe";
+            execution.setPath("./secretcode.exe");
         }
         if(!execution.setPath(filePath)) {
             std::cout << "The provided file path is incorrect or missing" << std::endl;
@@ -92,13 +97,15 @@ int main() {
         }
         try {
             execution.runProgram(&exitCode, arguments);
+            execution.recordResult(exitCode, arguments);
         }
         catch (const std::exception ex) {
-            //TODO: remove?
+
         }
         currentIter++;
-        std::cout << exitCode << std::endl;
     }
+
+    execution.printResults();
 
     return 0;
 }

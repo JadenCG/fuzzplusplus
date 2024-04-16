@@ -7,7 +7,6 @@
 
 
 int GuidedInput::randInt() {
-    srand(time(NULL));
     int value = rand();
     if(recordValues) {
         usedValues.insert(value);
@@ -16,7 +15,6 @@ int GuidedInput::randInt() {
 }
 
 int GuidedInput::randInt(int lowerBound, int upperBound) {
-    srand(time(NULL));
     int value;
     if(upperBound != 0) {
          value = lowerBound + (rand() % upperBound);
@@ -32,12 +30,10 @@ int GuidedInput::randInt(int lowerBound, int upperBound) {
 }
 
 float GuidedInput::randFloat() {
-    srand(time(NULL));
     return (float) rand();
 }
 
 bool GuidedInput::randBool() {
-    srand(time(NULL));
     return (bool) (rand() % 2);
 }
 
